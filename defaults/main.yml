@@ -1,0 +1,11 @@
+---
+
+GOLANG_URL: "https://storage.googleapis.com/golang/go1.7.4.linux-amd64.tar.gz"
+GOLANG_DEST: "/opt/go1.7.4.linux-amd64.tar.gz"
+GOLANG_CHECKSUM: "sha256:47fda42e46b4c3ec93fa5d4d4cc6a748aa3f9411a2a2b7e08e3a6d80d753ec8b"
+
+profile_items:
+  - regexp: "^export GOPATH="
+    line: "export GOPATH=$HOME"
+  - regexp: "^export PATH="
+    line: "export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin"

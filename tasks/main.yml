@@ -1,0 +1,56 @@
+---
+
+- name: "Download Go"
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{ GOLANG_URL }}"
+    dest: "{{ GOLANG_DEST }}"
+    checksum: "{{ GOLANG_CHECKSUM }}"
+
+- name: Create Directories
+  become: yes
+  become_user: root
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  with_items:
+    - "/opt/go1.7.4.linux-amd64"
+    - "/usr/local/go"
+
+- name: "Extract Go"
+  become: yes
+  become_user: root
+  unarchive:
+    src: "{{ GOLANG_DEST }}"
+    dest: "/opt/go1.7.4.linux-amd64"
+    copy: no
+    owner: root
+    group: root
+
+- name: Copy Go into /usr/local/go
+  become: yes
+  become_user: root
+  shell: "cp -R /opt/go1.7.4.linux-amd64/go/* /usr/local/go"
+
+- name: "Configure Go Paths"
+  become: yes
+  become_user: root
+  lineinfile: dest="/etc/profile.d/go.sh" regexp="{{ item.regexp }}" line="{{ item.line | unsafe }}" state="present" create=yes owner="root" group="root" mode="u=rwx,g=rx,o=rx"
+  with_items: "{{ profile_items }}"
+
+- name: Create User Directories
+  become: yes
+  become_user: root
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+  with_items:
+    - "~/src"
+    - "~/src/github.com"
