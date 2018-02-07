@@ -4,8 +4,8 @@
   become: yes
   become_user: root
   get_url:
-    url: "{{ GOLANG_URL }}"
-    dest: "{{ GOLANG_DEST }}"
+    url: "https://dl.google.com/go/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
+    dest: "/opt/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
     checksum: "{{ GOLANG_CHECKSUM }}"
 
 - name: Create Directories
@@ -18,15 +18,15 @@
     owner: root
     group: root
   with_items:
-    - "/opt/go1.7.4.linux-amd64"
+    - "/opt/go{{ GOLANG_VERSION }}.linux-amd64"
     - "/usr/local/go"
 
 - name: "Extract Go"
   become: yes
   become_user: root
   unarchive:
-    src: "{{ GOLANG_DEST }}"
-    dest: "/opt/go1.7.4.linux-amd64"
+    src: "/opt/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
+    dest: "/opt/go{{ GOLANG_VERSION }}.linux-amd64"
     copy: no
     owner: root
     group: root
@@ -34,7 +34,7 @@
 - name: Copy Go into /usr/local/go
   become: yes
   become_user: root
-  shell: "cp -R /opt/go1.7.4.linux-amd64/go/* /usr/local/go"
+  shell: "cp -R /opt/go{{ GOLANG_VERSION }}.linux-amd64/go/* /usr/local/go"
 
 - name: "Configure Go Paths"
   become: yes

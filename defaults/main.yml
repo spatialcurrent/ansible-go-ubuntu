@@ -1,8 +1,7 @@
 ---
 
-GOLANG_URL: "https://storage.googleapis.com/golang/go1.7.4.linux-amd64.tar.gz"
-GOLANG_DEST: "/opt/go1.7.4.linux-amd64.tar.gz"
-GOLANG_CHECKSUM: "sha256:47fda42e46b4c3ec93fa5d4d4cc6a748aa3f9411a2a2b7e08e3a6d80d753ec8b"
+GOLANG_VERSION: "1.9.3"
+GOLANG_CHECKSUM: "sha256:a4da5f4c07dfda8194c4621611aeb7ceaab98af0b38bfb29e1be2ebb04c3556c"
 
 profile_items:
   - regexp: "^export GOPATH="
